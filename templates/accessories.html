@@ -1,0 +1,230 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player with 3D View Button</title>
+    <style>
+        a {
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        a button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        a button:hover {
+            background-color: #0056b3;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        video {
+            width: 100%;
+            max-height: 400px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Accessories</h1>
+        <video loop>
+            <source src="{{ url_for('static', filename='images/RING.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button class="button" id="playButton">Play 3D View</button>
+        <a href="main_page.html"><button>Home-Page</button></a>
+    </div>
+    <div class="container">
+
+        <video loop>
+            <source src="{{ url_for('static', filename='images/earring.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button class="button" id="playButton1">Play 3D View</button>
+        <a href="main_page.html"><button>Home-Page</button></a>
+    </div>
+    
+
+    <script>
+        document.getElementById("playButton").addEventListener("click", function() {
+            var video = document.querySelector("video");
+            video.play();
+        });
+    </script>
+    <script>
+        document.getElementById("playButton1").addEventListener("click", function() {
+            var video = document.querySelector("video");
+            video.play();
+        });
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player with 3D View Button</title>
+    <style>
+        a {
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        a button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        a button:hover {
+            background-color: #0056b3;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        video {
+            width: 100%;
+            max-height: 400px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Accessories</h1>
+        <video id="video1" loop>
+            <source src="{{ url_for('static', filename='images/RING.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button class="button playButton" id="playButton1">Play 3D View</button>
+        <a href="main_page.html"><button>Home-Page</button></a>
+    </div>
+    <div class="container">
+        <video id="video2" loop>
+            <source src="{{ url_for('static', filename='images/earring.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button class="button playButton" id="playButton2">Play 3D View</button>
+        <a href="main_page.html"><button>Home-Page</button></a>
+    </div>
+    
+    <script>
+        // Get all elements with class "playButton"
+        var playButtons = document.querySelectorAll(".playButton");
+        
+        // Loop through each play button and add event listener
+        playButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                // Get the corresponding video element
+                var videoId = button.id.replace("playButton", "");
+                var video = document.getElementById("video" + videoId);
+                video.play();
+            });
+        });
+    </script>
+</body>
+</html>
