@@ -2,3 +2,5 @@ customtkinter
 pillow
 diffusers
 accelerator
+flask
+transformers
