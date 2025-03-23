@@ -49,6 +49,6 @@ Stable Diffusion is a deep learning model that generates high-quality images fro
 
 ---
 ### Left ToDo:
-- []: Enhance the css.
-- []: Map clothing items to the body coordinates.
-- []: Add more accessories.
+- [ ] Enhance the css.
+- [ ] Map clothing items to the body coordinates.
+- [ ] Add more accessories.
