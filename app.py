@@ -7,7 +7,6 @@ from diffusers import StableDiffusionPipeline
 
 app = Flask(__name__)
 
-# Flask routes
 @app.route('/')
 def index():
     return render_template('main_page.html')
@@ -22,11 +21,9 @@ def accessories_page():
 
 @app.route('/run_app')
 def run_app():
-    # Run the tkinter application in a separate thread
     threading.Thread(target=start_app).start()
     return 'App is running'
 
-# Route for customization process
 @app.route('/customize')
 def customize():
     return redirect('/run_app')
@@ -46,13 +43,13 @@ def start_app():
     lmain.place(x=10, y=110)
 
     modelid = "CompVis/stable-diffusion-v1-4"
-    device = "cpu"  # Change to CPU
-    auth_token = "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"  # Replace this with your actual authentication token
-    pipe = StableDiffusionPipeline.from_pretrained(modelid)  # Remove use_auth_token
+    device="cuda"
+    
+    # device = "cpu"  # Change to CPU
+    pipe = StableDiffusionPipeline.from_pretrained(modelid)  
     pipe.to(device) 
 
     def generate(): 
-        # Generate image asynchronously
         def generate_image_async():
             try:
                 output = pipe(prompt.get(), guidance_scale=8.5)
@@ -66,7 +63,6 @@ def start_app():
             except Exception as e:
                 print("Error during image generation:", e)
 
-        # Run image generation in a separate thread
         threading.Thread(target=generate_image_async).start()
 
     trigger = ctk.CTkButton(app, height=40, width=120, text_color="white", fg_color="blue", command=generate)
@@ -75,7 +71,6 @@ def start_app():
 
     print("App.py finished.")
 
-    # Run the tkinter main loop
     app.mainloop()
 
 if __name__ == '__main__':
