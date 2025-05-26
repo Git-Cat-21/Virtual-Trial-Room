@@ -55,7 +55,7 @@ def start_app():
                 output = pipe(prompt.get(), guidance_scale=8.5)
                 if "images" in output and len(output["images"]) > 0:
                     image = output["images"][0]
-                    image.save('generatedimage.png')
+                    image.save('images/generatedimage.png')
                     img = ImageTk.PhotoImage(image)
                     lmain.configure(image=img)
                 else:

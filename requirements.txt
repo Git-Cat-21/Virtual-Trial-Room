@@ -4,3 +4,5 @@ diffusers
 accelerator
 flask
 transformers
+mediapipe
+opencv-python
