@@ -6,10 +6,10 @@ import { useRef } from "react";
 
 const Accessories = () => {
   const navigate = useNavigate();
-  const video1Ref = useRef<HTMLVideoElement>(null);
-  const video2Ref = useRef<HTMLVideoElement>(null);
+  const video1Ref = useRef<HTMLVideoElement | null>(null);
+  const video2Ref = useRef<HTMLVideoElement | null>(null);
 
-  const handlePlayVideo = (videoRef: React.RefObject<HTMLVideoElement>) => {
+  const handlePlayVideo = (videoRef: React.RefObject<HTMLVideoElement | null>) => {
     if (videoRef.current) {
       videoRef.current.play();
     }
@@ -45,7 +45,7 @@ const Accessories = () => {
                   muted
                   poster="/placeholder.svg?height=300&width=500&text=Ring+Video"
                 >
-                  <source src="/static/images/RING.mp4" type="video/mp4" />
+                  <source src="/assets/RING.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -69,9 +69,9 @@ const Accessories = () => {
                   className="w-full h-full object-cover rounded-lg"
                   loop
                   muted
-                  poster="/placeholder.svg?height=300&width=500&text=Earring+Video"
+                  poster="/placeholder.svg?height=300&width=500&text=Earring"
                 >
-                  <source src="/static/images/earring.mp4" type="video/mp4" />
+                  <source src="/assets/earring.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
