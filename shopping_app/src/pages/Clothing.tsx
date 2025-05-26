@@ -10,19 +10,19 @@ const Clothing = () => {
     { 
       id: 1, 
       name: "Item 1", 
-      image: "/placeholder.svg?height=300&width=250&text=Item+1",
+      image:"/assets/1.png",
       color: "from-blue-100 to-cyan-100"
     },
     { 
       id: 2, 
       name: "Item 2", 
-      image: "/placeholder.svg?height=300&width=250&text=Item+2",
+      image: "/assets/2.png",
       color: "from-pink-100 to-rose-100"
     },
     { 
       id: 3, 
       name: "Item 3", 
-      image: "/placeholder.svg?height=300&width=250&text=Item+3",
+      image: "/assets/3.png",
       color: "from-green-100 to-emerald-100"
     }
   ];
