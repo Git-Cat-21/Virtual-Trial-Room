@@ -1,28 +1,39 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, jsonify
 import threading
 import tkinter as tk
 import customtkinter as ctk
 from PIL import ImageTk
 from diffusers import StableDiffusionPipeline
+import subprocess
+import webbrowser
+import time
+
+def start_react():
+    try:
+        subprocess.Popen(["npm", "run", "dev"], cwd="./shopping_app")
+        time.sleep(3)  
+        webbrowser.open("http://localhost:5173")  
+    except Exception as e:
+        print("Failed to start React app:", e)
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return render_template('main_page.html')
+# @app.route('/')
+# def index():
+#     return render_template('main_page.html')
 
-@app.route('/clothing')
-def clothing_page():
-    return render_template('clothing.html')
+# @app.route('/clothing')
+# def clothing_page():
+#     return render_template('clothing.html')
 
-@app.route('/accessories')
-def accessories_page():
-    return render_template('accessories.html')
+# @app.route('/accessories')
+# def accessories_page():
+#     return render_template('accessories.html')
 
 @app.route('/run_app')
 def run_app():
     threading.Thread(target=start_app).start()
-    return 'App is running'
+    return jsonify({"status":"started"})
 
 @app.route('/customize')
 def customize():
@@ -74,4 +85,5 @@ def start_app():
     app.mainloop()
 
 if __name__ == '__main__':
+    start_react()  
     app.run(debug=True)
