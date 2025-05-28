@@ -7,6 +7,8 @@ from diffusers import StableDiffusionPipeline
 import subprocess
 import webbrowser
 import time
+import cv2
+import mediapipe as mp
 
 def start_react():
     try:
@@ -17,6 +19,10 @@ def start_react():
         print("Failed to start React app:", e)
 
 app = Flask(__name__)
+
+body_map_lock = threading.Lock()
+body_map_running = False
+
 
 # @app.route('/')
 # def index():
@@ -35,9 +41,34 @@ def run_app():
     threading.Thread(target=start_app).start()
     return jsonify({"status":"started"})
 
-@app.route('/customize')
-def customize():
-    return redirect('/run_app')
+# @app.route('/customize')
+# def customize():
+#     return redirect('/run_app')
+
+# @app.route('/body_map')
+# def body_map():
+#     threading.Thread(target=start_body_map).start()
+#     return jsonify({"status": "started"})
+
+@app.route('/body_map')
+def body_map():
+    global body_map_running
+
+    if body_map_running:
+        return jsonify({"status": "already running"})
+
+    with body_map_lock:
+        if not body_map_running:
+            body_map_running = True
+            threading.Thread(target=start_body_map).start()
+            return jsonify({"status": "started"})
+        else:
+            return jsonify({"status": "already running"})
+
+
+# @app.route('/clothing')
+# def clothing():
+#     return redirect('/body_map')
 
 def start_app():
     print("Running app.py...")
@@ -83,6 +114,44 @@ def start_app():
     print("App.py finished.")
 
     app.mainloop()
+
+def start_body_map():
+    global body_map_running
+
+    try:
+        mp_pose = mp.solutions.pose
+        mp_drawing = mp.solutions.drawing_utils
+
+        cap = cv2.VideoCapture(0)
+
+        if not cap.isOpened():
+            print("Failed to open camera")
+            body_map_running = False
+            return
+
+        with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
+            while cap.isOpened():
+                ret, frame = cap.read()
+                if not ret:
+                    break
+
+                image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                results = pose.process(image)
+
+                image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+                if results.pose_landmarks:
+                    mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+
+                cv2.imshow('Pose Estimation', image)
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
+    finally:
+            cap.release()
+            cv2.destroyAllWindows()
+            body_map_running = False
+
+    # cap.release()
+    # cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     start_react()  

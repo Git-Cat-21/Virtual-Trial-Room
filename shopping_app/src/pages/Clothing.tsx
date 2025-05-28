@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
@@ -63,6 +64,19 @@ const Clothing = () => {
                 <div className="space-y-4">
                   <Button 
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 transition-all duration-300 hover:shadow-lg"
+                    onClick={() => {
+                        fetch("http://localhost:5000/body_map")
+                        .then((res)=>res.json())
+                        .then((data) => {
+                          console.log("Pose detection started", data);
+                          // alert("Pose detection started!");
+                        })
+                        .catch((err) =>{
+                          console.error("Error starting body map:", err);
+                          // alert("Failed to start pose detection");
+                        });
+
+                    }}
                   >
                     Try On
                   </Button>
