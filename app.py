@@ -141,6 +141,7 @@ def start_body_map():
                 image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
                 if results.pose_landmarks:
                     mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+                    image=overlay_shirt(image,results.pose_landmarks.landmark,mp_pose)
 
                 cv2.imshow('Pose Estimation', image)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -153,6 +154,48 @@ def start_body_map():
     # cap.release()
     # cv2.destroyAllWindows()
 
+def overlay_shirt(image, landmarks, mp_pose):
+    try:
+        image_h,image_w,_=image.shape
+        
+        l_shoulder = landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER]
+        r_shoulder = landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER]
+        l_hip = landmarks[mp_pose.PoseLandmark.LEFT_HIP]
+        r_hip = landmarks[mp_pose.PoseLandmark.RIGHT_HIP]
+        
+        x1 = int(min(l_shoulder.x, r_shoulder.x) * image_w)
+        y1 = int(min(l_shoulder.y, r_shoulder.y) * image_h)
+        x2 = int(max(l_hip.x, r_hip.x) * image_w)
+        y2 = int(max(l_hip.y, r_hip.y) * image_h)
+
+
+        shirt = cv2.imread('./1.png', cv2.IMREAD_UNCHANGED)
+        if shirt is None:
+            print("shirt image not found")
+            return image
+
+
+        shirt_resized = cv2.resize(shirt, (x2 - x1, y2 - y1))
+
+        # Separate alpha and BGR channels
+        alpha_s = shirt_resized[:, :, 3] / 255.0  
+        alpha_l = 1.0 - alpha_s
+
+        if y1 < 0 or y2 > image_h or x1 < 0 or x2 > image_w:
+            return image
+
+        for c in range(3):  # BGR channels
+            image[y1:y2, x1:x2, c] = (
+                alpha_s * shirt_resized[:, :, c] +
+                alpha_l * image[y1:y2, x1:x2, c]
+            )
+
+    except Exception as e:
+        print("Overlay error:", e)
+
+    return image
+
+        
 if __name__ == '__main__':
     start_react()  
     app.run(debug=True)
